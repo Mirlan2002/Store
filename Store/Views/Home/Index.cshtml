@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Store.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="screen">
+    <img src="~/img/Background Image.png" alt="">
+    <div class="shadow">
+        <div class="flex">
+            <h4>Welcome To Our Studio!</h4>
+            <h2>It’s nice to Meet you</h2>
+            <button class="btn">tell me more</button>
+        </div>
+    </div>
+</div>
+<div class="block2">
+    <a asp-action="Create" asp-controller="Home">Добавить</a>
+    <h2>Все товары</h2>
+    <p>Proin iaculis purus consequat sem cure. </p>
+    <div class="wrap">
+        @foreach(var item in Model)
+        {
+            <a href="#" class="article">
+                <img src="~/img/@item.TitleImagePath" alt="">
+                <h2>@item.Name</h2>
+                <p> Price: @item.Price сом</p>
+            </a>
+        }
+    </div>
+</div>
