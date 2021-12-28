@@ -1,0 +1,35 @@
+﻿@model Product
+@{ 
+    ViewBag.Title = "Добавление товара";
+}
+
+
+<form asp-area="Admin" asp-controller="Edit" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="TitleImagePath" />
+    <div>
+        <label asp-for="Name">Название товара:</label>
+        <input asp-for="Name" type="text" />
+    </div>
+    <div>
+        <label asp-for="Price">Цена:</label>
+        <input type="number" asp-for="Price" />
+    </div>
+    <div>
+        <label asp-for="TitleImagePath">Картинка:</label>
+        <input type="file" name="titleImageFile" />
+        <div>
+            <img src="~/img/@Model.TitleImagePath" />
+        </div>
+    </div>
+    <div>
+        <label asp-for="Description">Описание:</label>
+        <textarea asp-for="Description"></textarea>
+    </div>
+    <div>
+        <label asp-for="ForHuman">Для кого:</label>
+        <select asp-for="ForHuman" asp-items="@new SelectList(Enum.GetNames(typeof(ForWho)))"></select>
+    </div>
+    <div>
+        <input type="submit" value="Отправить" />
+    </div>
+</form>

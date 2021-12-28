@@ -1,7 +1,7 @@
 ﻿@model IndexViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Administrator Page";
 }
 
 <div class="screen">
@@ -16,6 +16,8 @@
 </div>
 <div class="block2">
     <div class="wrap">
+        <a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
+        <a asp-controller="Edit" asp-action="Edit">Добавить</a>
         <p>Proin iaculis purus consequat sem cure. </p>
         <ul>
             @foreach (ForWho option in Enum.GetValues(typeof(ForWho)))
@@ -30,16 +32,21 @@
                 }
             }
         </ul>
+
         <div class="block">
             @foreach (var item in Model.PageProducts)
-            {
-                <a asp-controller="Product" asp-action="Index" asp-route-id="@item.Id" class="article">
-                    <img src="~/img/@item.TitleImagePath" alt="">
-                    <h2>@item.Name</h2>
-                    <p> Price: @item.Price сом</p>
-                </a>
+            {<div class="article">
+                    <a asp-area="" asp-action="Index" asp-controller="Product" asp-route-id="@item.Id">
+                        <img src="~/img/@item.TitleImagePath" alt="">
+                        <h2>@item.Name</h2>
+                        <p> Price: @item.Price сом</p>
+                    </a>
+                    <a asp-controller="Edit" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                    <a asp-controller="Edit" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </div>
             }
         </div>
+       
         <div class="pagination">
             @if (Model.OnePageViewModel.CurrentPageNumber != 1)
             {
@@ -69,4 +76,3 @@
         </div>
     </div>
 </div>
-

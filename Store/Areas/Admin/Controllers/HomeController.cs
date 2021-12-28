@@ -1,29 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Store.Models;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Store.Models;
+using Microsoft.EntityFrameworkCore;
 using Store.ViewModels;
 
 
-namespace Store.Controllers
+namespace Store.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private ApplicationContext db;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
+        public HomeController(ApplicationContext context)
         {
-            _logger = logger;
             db = context;
         }
 
-        public IActionResult Index(ForWho option, int page=1)
+        public IActionResult Index(ForWho option, int page = 1)
         {
             int pageSize = 3; //количество элементов на странице
             IQueryable<Product> source;
@@ -47,18 +44,6 @@ namespace Store.Controllers
                 CurrentOption = option
             };
             return View(viewModel);
-        }
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

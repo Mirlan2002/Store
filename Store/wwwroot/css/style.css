@@ -211,7 +211,7 @@
 	color:#777777;
 	text-align:center;
 }
-.block2 .wrap {
+.block2 .block {
 	display:flex;
 	flex-wrap: wrap;
 	justify-content:space-between;
@@ -240,6 +240,12 @@
 	width:inherit;
 	height:300px;
 	object-fit:cover;
+}
+.pagination{
+	width: 200px;
+	margin: 0 auto;
+	display:flex;
+	justify-content:space-around;
 }
 .block3{
 	padding:90px 0 90px 0;
@@ -483,4 +489,11 @@
 }
 .block7 .wrap:hover .g{
 	background: #D85232;
+}
+.active-option {
+	color: #F05E59;
+}
+.current-page {
+	color: #F05E59;
+	font-size: 30px;
 }
