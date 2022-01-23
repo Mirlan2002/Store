@@ -1,11 +1,10 @@
 ﻿@model Product
-@{ 
+@{
     ViewBag.Title = "Добавление товара";
 }
 
 
 <form asp-area="Admin" asp-controller="Edit" asp-action="Edit" enctype="multipart/form-data">
-    <input type="hidden" asp-for="TitleImagePath" />
     <div>
         <label asp-for="Name">Название товара:</label>
         <input asp-for="Name" type="text" />
@@ -15,11 +14,20 @@
         <input type="number" asp-for="Price" />
     </div>
     <div>
-        <label asp-for="TitleImagePath">Картинка:</label>
-        <input type="file" name="titleImageFile" />
+        <label asp-for="TitleImagePath">Картинка: </label>
+        <input id="inp" type="file" name="titleImageFile" />
         <div>
-            <img src="~/img/@Model.TitleImagePath" />
+            <img src="~/img/@Model.TitleImagePath" id="image"/>
         </div>
+        <script>
+            const inp = document.getElementById("inp");
+            const image = document.getElementById("image");
+            inp.addEventListener('input', myFunc);
+            function myFunc(e) {
+                var str = URL.createObjectURL(e.target.files[0]);
+                image.setAttribute('src', str);
+            }
+        </script>
     </div>
     <div>
         <label asp-for="Description">Описание:</label>

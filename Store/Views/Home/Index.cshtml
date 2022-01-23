@@ -33,11 +33,11 @@
         <div class="block">
             @foreach (var item in Model.PageProducts)
             {
-                <a asp-controller="Product" asp-action="Index" asp-route-id="@item.Id" class="article">
-                    <img src="~/img/@item.TitleImagePath" alt="">
-                    <h2>@item.Name</h2>
-                    <p> Price: @item.Price сом</p>
-                </a>
+            <a asp-controller="Product" asp-action="Index" asp-route-id="@item.Id" class="article">
+                <img src="~/img/@item.TitleImagePath" alt="" />
+                <h2>@item.Name</h2>
+                <p> Price: @item.Price сом</p>
+            </a>
             }
         </div>
         <div class="pagination">

@@ -38,7 +38,7 @@ namespace Store.Areas.Admin.Controllers
                 if (titleImageFile != null)
                 {
                     product.TitleImagePath = titleImageFile.FileName;
-                    using (var stream = new FileStream(Path.Combine(hostingEnvironment.WebRootPath, "img/", titleImageFile.FileName), FileMode.Create))
+                    using(var stream = new FileStream(Path.Combine(hostingEnvironment.WebRootPath,"img",titleImageFile.FileName),FileMode.Create))
                     {
                         titleImageFile.CopyTo(stream);
                     }
