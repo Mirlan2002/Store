@@ -5,6 +5,7 @@
 
 
 <form asp-area="Admin" asp-controller="Edit" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="TitleImagePath" />
     <div>
         <label asp-for="Name">Название товара:</label>
         <input asp-for="Name" type="text" />
@@ -13,25 +14,80 @@
         <label asp-for="Price">Цена:</label>
         <input type="number" asp-for="Price" />
     </div>
-    <div>
-        <label asp-for="TitleImagePath">Картинка: </label>
-        <input id="inp" type="file" name="titleImageFile" />
-        <div>
-            <img src="~/img/@Model.TitleImagePath" id="image"/>
-        </div>
+    <div id="imgdiv" style="border:1px solid green;">
+        <label>Картинка: </label>
+        <input id="inp" type="file" name="titleImageFile"/>
+            <div>
+                <img src="~/img/productimg/@Model.TitleImagePath" id="image" />
+            </div>
         <script>
             const inp = document.getElementById("inp");
             const image = document.getElementById("image");
-            inp.addEventListener('input', myFunc);
+            inp.addEventListener('input', myFunc);            // display image on change the file input
             function myFunc(e) {
                 var str = URL.createObjectURL(e.target.files[0]);
-                image.setAttribute('src', str);
+                image.src = str;
+                a.style.display = "inline-block";
+            }
+            let a = document.createElement("a");
+            a.style.color = "red";
+            a.innerHTML = "X";
+            a.style.display = "none";
+            inp.after(a);
+            a.onclick = function (e) {
+                image.src = "";
+                a.style.display = "none";
+                inp.value = "";
+            };
+            if (image.getAttribute("src").replace(/^.*[\\\/]/, '') != "") {
+                a.style.display = "inline-block";
             }
         </script>
     </div>
     <div>
         <label asp-for="Description">Описание:</label>
         <textarea asp-for="Description"></textarea>
+    </div>
+    <div id="files">
+        <label>Медиа:</label>
+        <div class="addfile" id="addfile">+</div>
+        <div class="slider-wrapper">
+            <div class="slider-container">
+                <div class="slider-track">
+                    @foreach (var a in ViewBag.Media)
+                    {
+                        if (a.Extension == ".mp4")
+                        {
+                            <video controls>
+                                <source src="~/img/images/@a.Id@a.Extension" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img class="slider-item" src="~/img/images/@a.Id@a.Extension" alt="" />
+                        }
+                    }
+                </div>
+            </div>
+            <div class="circle-wrap" id="circle-wrap"></div>
+            <div class="mini-slider"></div>
+            <div class="slider-buttons">
+                <div class="btn-prev">Prev</div>
+                <div class="btn-next">Next</div>
+            </div>
+        </div>
+        <script>
+            let addfile = document.getElementById('addfile');
+            addfile.onclick = function (e) {
+                let input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('name', 'uploads');
+                input.setAttribute('multiple', 'multiple');
+                input.setAttribute('hidden', 'hidden');
+                document.getElementById('files').appendChild(input);
+                input.click();
+            }
+        </script>
     </div>
     <div>
         <label asp-for="ForHuman">Для кого:</label>

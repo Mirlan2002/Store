@@ -35,18 +35,19 @@
 
         <div class="block">
             @foreach (var item in Model.PageProducts)
-            {<div class="article">
-                 <a asp-area="" asp-action="Index" asp-controller="Product" asp-route-id="@item.Id">
-                     <img src="~/img/@item.TitleImagePath" alt="" />
-                     <h2>@item.Name</h2>
-                     <p> Price: @item.Price сом</p>
-                 </a>
-                    <a asp-controller="Edit" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                    <a asp-controller="Edit" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            {
+                <div class="article">
+                    <a asp-area="" asp-action="Index" asp-controller="Product" asp-route-id="@item.Key.Id">
+                        <img src="~/img/productimg/@item.Key.TitleImagePath" alt="" />
+                        <h2>@item.Key.Name</h2>
+                        <p> Price: @item.Key.Price сом</p>
+                    </a>
+                    <a asp-controller="Edit" asp-action="Edit" asp-route-id="@item.Key.Id">Изменить</a>
+                    <a asp-controller="Edit" asp-action="Delete" asp-route-id="@item.Key.Id">Удалить</a>
                 </div>
             }
         </div>
-       
+
         <div class="pagination">
             @if (Model.OnePageViewModel.CurrentPageNumber != 1)
             {

@@ -8,7 +8,7 @@ namespace Store.ViewModels
 {
     public class IndexViewModel
     {
-        public IEnumerable<Product> PageProducts { get; set; }
+        public Dictionary<Product,IEnumerable<Media>> PageProducts { get; set; }
         public PageViewModel OnePageViewModel { get; set; }
         public ForWho CurrentOption { get; set; }
     }

@@ -18,6 +18,7 @@ namespace Store.Controllers
 
         public IActionResult Index(int id)
         {
+            ViewBag.Media = db.Medias.Where(x => x.ProductId == id);
             return View(db.Products.FirstOrDefault(x => x.Id == id));
         }
     }

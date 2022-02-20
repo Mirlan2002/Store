@@ -69,3 +69,28 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+
+.addfile {
+    background-color: rgb(133, 246, 209);
+    color: #23FF23;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+    .addfile:hover {
+        font-size: 45px;
+        cursor: pointer;
+    }
+
+
+
+

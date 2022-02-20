@@ -37,8 +37,12 @@ namespace Store.Controllers
                 source = db.Products.Where(x => x.ForHuman == option).Union(db.Products.Where(x => x.ForHuman == ForWho.All));
             }
             int count = source.Count();
-            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            var products = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            Dictionary<Product,IEnumerable<Media>> items = new Dictionary<Product, IEnumerable<Media>>();
+            foreach (var p in products)
+            {
+                items[p] = db.Medias.Where(x => x.ProductId == p.Id);
+            }
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             IndexViewModel viewModel = new IndexViewModel
