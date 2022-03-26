@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 
 
-
 namespace Store.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -50,6 +49,14 @@ namespace Store.Areas.Admin.Controllers
                 productId = product.Id;
                 if (titleImageFile != default)
                 {
+                    if (product.TitleImagePath != default)
+                    {
+                        FileInfo fileInf = new FileInfo(hostingEnvironment.WebRootPath + "/img/productimg/" + product.TitleImagePath);
+                        if (fileInf.Exists)
+                        {
+                            fileInf.Delete();
+                        }
+                    }
                     product.TitleImagePath = productId + Path.GetExtension(titleImageFile.FileName);
                     db.Products.Update(product);
                     await db.SaveChangesAsync();
@@ -61,7 +68,7 @@ namespace Store.Areas.Admin.Controllers
                 }
                 foreach (var uploadedFile in uploads)
                 {
-                    if(uploadedFile != default)
+                    if (uploadedFile != default)
                     {
                         Media media = new Media { ProductId = productId, Extension = Path.GetExtension(uploadedFile.FileName) };
                         db.Medias.Add(media);
@@ -103,11 +110,33 @@ namespace Store.Areas.Admin.Controllers
             if (id != default)
             {
                 var product = db.Products.FirstOrDefault(x => x.Id == id);
+                FileInfo fileInf = new FileInfo(hostingEnvironment.WebRootPath + "/img/productimg/" + product.TitleImagePath);
+                if (fileInf.Exists)
+                {
+                    fileInf.Delete();
+                }
+                IQueryable<Media> medias = db.Medias.Where(x => x.ProductId == id);
+                foreach (Media m in medias)
+                {
+                    FileInfo fI = new FileInfo(hostingEnvironment.WebRootPath + "/img/images/" + m.Id + m.Extension);
+                    if (fI.Exists)
+                    {
+                        fI.Delete();
+                    }
+                }
                 db.Products.Remove(product);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
             return NotFound();
+        }
+
+
+
+        [HttpPost]
+        public int DeleteTitleImage()
+        {
+            return StatusCodes.Status200OK;
         }
     }
 }

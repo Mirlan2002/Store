@@ -4,8 +4,8 @@
 }
 
 
-<form asp-area="Admin" asp-controller="Edit" asp-action="Edit" enctype="multipart/form-data">
-    <input type="hidden" asp-for="TitleImagePath" />
+<form action="" method="post" enctype="multipart/form-data">
+    <input id="TitleImagePath" type="hidden" asp-for="TitleImagePath" />
     <div>
         <label asp-for="Name">Название товара:</label>
         <input asp-for="Name" type="text" />
@@ -16,10 +16,11 @@
     </div>
     <div id="imgdiv" style="border:1px solid green;">
         <label>Картинка: </label>
-        <input id="inp" type="file" name="titleImageFile"/>
-            <div>
-                <img src="~/img/productimg/@Model.TitleImagePath" id="image" />
-            </div>
+        <input id="inp" type="file" name="titleImageFile" />
+        <button id="delete" class="delete">x</button>
+        <div>
+            <img src="~/img/productimg/@Model.TitleImagePath" id="image" />
+        </div>
         <script>
             const inp = document.getElementById("inp");
             const image = document.getElementById("image");
@@ -29,20 +30,38 @@
                 image.src = str;
                 a.style.display = "inline-block";
             }
-            let a = document.createElement("a");
-            a.style.color = "red";
+            //let a = document.createElement("a");
+            let a = document.getElementById("delete");
+            @*a.style.color = "red";
             a.innerHTML = "X";
             a.style.display = "none";
-            inp.after(a);
+            inp.after(a);*@
             a.onclick = function (e) {
+                e.preventDefault();
+
                 image.src = "";
                 a.style.display = "none";
                 inp.value = "";
+
+            @*    alert("The image will be dleted.");
+                let TitleImagePath = document.getElementById("TitleImagePath");
+                if (TitleImagePath.value !==default) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/Admin/Edit/DeleteTitleImage");
+                    xhr.onload = () => {
+                        if (xhr.status != 200) {              
+                            alert("Не удалось удалить картинку, попробуйте еще раз");
+                            image.src = TitleImagePath.value;
+                        }
+                    };
+                    xhr.send();   
+                }*@
             };
             if (image.getAttribute("src").replace(/^.*[\\\/]/, '') != "") {
                 a.style.display = "inline-block";
             }
         </script>
+
     </div>
     <div>
         <label asp-for="Description">Описание:</label>
@@ -94,6 +113,6 @@
         <select asp-for="ForHuman" asp-items="@new SelectList(Enum.GetNames(typeof(ForWho)))"></select>
     </div>
     <div>
-        <input type="submit" value="Отправить" />
+        <button asp-area="Admin" asp-controller="Edit" asp-action="Edit">Сохранить</button>
     </div>
 </form>
