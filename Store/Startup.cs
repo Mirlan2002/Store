@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+п»їusing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +32,7 @@ namespace Store
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(connection));
 
-            //настраиваем identity систему
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ identity Г±ГЁГ±ГІГҐГ¬Гі  РїСЂРѕРІРµСЂРєР°
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -44,7 +44,7 @@ namespace Store
             }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 
-            //настраиваем authentication cookie
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ authentication cookie
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "myCompanyAuth";
@@ -55,7 +55,7 @@ namespace Store
             });
 
 
-            //настраиваем политику авторизации для Admin area
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ ГЇГ®Г«ГЁГІГЁГЄГі Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГЁ Г¤Г«Гї Admin area
             services.AddAuthorization(x =>
             {
                 x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
